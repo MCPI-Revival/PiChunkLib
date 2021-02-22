@@ -57,9 +57,9 @@ def to_chunks(data):
         chunk_data = b"".join(sectors[i["scfs"]:i["scfs"] + i["sc"]])
         if chunk_data[0:4] == b"\x04\x41\x01\x00": # Is a valid chunk?
             chunks.append({
-                "blocks": data[:16384],
-                "data": data[16384:32768],
-                "skylight": data[32768:49152],
-                "blocklight": data[49152:65536]
+                "blocks": chunk_data[:16384],
+                "data": chunk_data[16384:32768],
+                "skylight": chunk_data[32768:49152],
+                "blocklight": chunk_data[49152:65536]
             })
     return chunks
