@@ -61,6 +61,9 @@ def decode_skylight(data):
 def decode_blocklight(data):
     return data # Todo
 
+def decode_biomes(data):
+    return data # Todo
+
 def decode_chunks(data):
     sectors = split_to_sectors(data)
     index = decode_index(sectors[0])
@@ -72,6 +75,7 @@ def decode_chunks(data):
                 "blocks": decode_blocks(chunk_data[:16384]),
                 "data": decode_data(chunk_data[16384:32768]),
                 "skylight": decode_skylight(chunk_data[32768:49152]),
-                "blocklight": decode_blocklight(chunk_data[49152:65536])
+                "blocklight": decode_blocklight(chunk_data[49152:65536]),
+                "biomes": decode_biomes(chunk_data[65536:65792])
             })
     return chunks
