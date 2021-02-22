@@ -31,7 +31,7 @@
 
 import struct
 
-def data_to_sectors(data):
+def to_sectors(data):
     offset = 0
     sectors = []
     while not len(data) <= offset:
@@ -48,4 +48,8 @@ def decode_index(data):
         scfs = int.from_bytes(data[offset + 1:offset + 4], "little") # The count of sectors from the start
         chunks_info.append({"sc": sc, "scfs": scfs})
     return chunks_info
-        
+
+def decode_chunks(data):
+    sectors = to_sectors(data)
+    index = decode_index(sector[0])
+    # Todo
