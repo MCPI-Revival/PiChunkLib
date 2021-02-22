@@ -58,3 +58,12 @@ def to_chunks(data):
     for i in index:
         chunks.append(b"".join(sectors[i["scfs"]:i["scfs"] + i["sc"]]))
     return chunks
+
+def split_chunk(data):
+    if data[0:4] == magic:
+        return {
+            "blocks": data[:16384],
+            "data": data[16384:32768],
+            "skylight": data[32768:49152],
+            "blocklight": data[49152:65536]
+        }
