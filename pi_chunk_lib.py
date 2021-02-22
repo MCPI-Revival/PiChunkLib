@@ -55,4 +55,4 @@ def to_chunks(data):
     chunks = []
     for i in index:
         chunks.append(b"".join(sectors[i["scfs"]:i["scfs"] + i["sc"]]))
-    
+    return chunks
