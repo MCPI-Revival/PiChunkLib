@@ -55,7 +55,7 @@ def decode_blocks(data):
     x = 0
     z = 0
     y = 0
-    while True:
+    while not len(data) <= offset:
         block_map[x][z][y] = data[offset]
         offset += 1
         if y == 127:
