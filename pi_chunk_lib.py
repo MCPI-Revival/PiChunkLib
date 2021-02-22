@@ -69,8 +69,9 @@ def decode_chunks(data):
     index = decode_index(sectors[0])
     chunks = []
     for i in index:
-        chunk_data = b"".join(sectors[i["scfs"]:i["scfs"] + i["sc"]])
-        if chunk_data[0:4] == b"\x04\x41\x01\x00": # Is a valid chunk?
+        total_chunk_data = b"".join(sectors[i["scfs"]:i["scfs"] + i["sc"]])
+        if total_chunk_data[0:4] == b"\x04\x41\x01\x00": # Is a valid chunk?
+            chunk_data = total_chunk_data[4:]
             chunks.append({
                 "blocks": decode_blocks(chunk_data[:16384]),
                 "data": decode_data(chunk_data[16384:32768]),
