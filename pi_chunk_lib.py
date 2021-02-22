@@ -29,10 +29,23 @@
 #                                                                              #
 ################################################################################
 
-def to_sectors(data):
+import struct
+
+def data_to_sectors(data):
     offset = 0
     sectors = []
     while not len(data) <= offset:
         sectors.append(data[offset:offset + 4096])
         offset += 4096
     return sectors
+
+def decode_index(data):
+    if len(data) != 4096:
+        return
+    chunks_info = []
+    for offset in range(0, 4096, 4):
+        sc = data[offset] # The sector count of the chunk
+        scfs = int.from_bytes(data[offset + 1:offset + 4], "little") # The count of sectors from the start
+        chunks_info.append({"sc": sc, "scfs": scfs})
+    return chunks_info
+        
