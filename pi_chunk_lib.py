@@ -69,14 +69,13 @@ def decode_chunks(data):
     index = decode_index(sectors[0])
     chunks = []
     for i in index:
-        total_chunk_data = b"".join(sectors[i["scfs"]:i["scfs"] + i["sc"]])
-        if total_chunk_data[0:4] == b"\x04\x41\x01\x00": # Is a valid chunk?
-            chunk_data = total_chunk_data[4:]
+        chunk_data = b"".join(sectors[i["scfs"]:i["scfs"] + i["sc"]])
+        if chunk_data[:4] == b"\x04\x41\x01\x00": # Is a valid chunk?
             chunks.append({
-                "blocks": decode_blocks(chunk_data[:16384]),
-                "data": decode_data(chunk_data[16384:32768]),
-                "skylight": decode_skylight(chunk_data[32768:49152]),
-                "blocklight": decode_blocklight(chunk_data[49152:65536]),
-                "biomes": decode_biomes(chunk_data[65536:65792])
+                "blocks": decode_blocks(chunk_data[4:16388]),
+                "data": decode_data(chunk_data[16388:32772]),
+                "skylight": decode_skylight(chunk_data[32772:49156]),
+                "blocklight": decode_blocklight(chunk_data[49156:65540]),
+                "biomes": decode_biomes(chunk_data[65540:65796])
             })
     return chunks
