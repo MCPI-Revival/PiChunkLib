@@ -49,7 +49,19 @@ def decode_index(data):
         chunks_info.append({"sc": sc, "scfs": scfs})
     return chunks_info
 
-def to_chunks(data):
+def decode_blocks(data):
+    return data # Todo
+
+def decode_data(data):
+    return data # Todo
+
+def decode_skylight(data):
+    return data # Todo
+
+def decode_blocklight(data):
+    return data # Todo
+
+def decode_chunks(data):
     sectors = split_to_sectors(data)
     index = decode_index(sectors[0])
     chunks = []
@@ -57,9 +69,9 @@ def to_chunks(data):
         chunk_data = b"".join(sectors[i["scfs"]:i["scfs"] + i["sc"]])
         if chunk_data[0:4] == b"\x04\x41\x01\x00": # Is a valid chunk?
             chunks.append({
-                "blocks": chunk_data[:16384],
-                "data": chunk_data[16384:32768],
-                "skylight": chunk_data[32768:49152],
-                "blocklight": chunk_data[49152:65536]
+                "blocks": decode_blocks(chunk_data[:16384]),
+                "data": decode_data(chunk_data[16384:32768]),
+                "skylight": decode_skylight(chunk_data[32768:49152]),
+                "blocklight": decode_blocklight(chunk_data[49152:65536])
             })
     return chunks
