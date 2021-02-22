@@ -51,7 +51,7 @@ def decode_index(data):
 
 def to_chunks(data):
     sectors = split_to_sectors(data)
-    index = decode_index(sector[0])
+    index = decode_index(sectors[0])
     chunks = []
     for i in index:
         chunk_data = b"".join(sectors[i["scfs"]:i["scfs"] + i["sc"]])
