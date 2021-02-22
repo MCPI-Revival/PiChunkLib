@@ -31,8 +31,6 @@
 
 import struct
 
-magic = b"\x04\x41\x01\x00"
-
 def to_sectors(data):
     offset = 0
     sectors = []
@@ -60,7 +58,7 @@ def to_chunks(data):
     return chunks
 
 def split_chunk(data):
-    if data[0:4] == magic:
+    if data[0:4] == b"\x04\x41\x01\x00": # Is a valid chunk?
         return {
             "blocks": data[:16384],
             "data": data[16384:32768],
