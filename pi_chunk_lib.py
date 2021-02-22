@@ -49,7 +49,10 @@ def decode_index(data):
         chunks_info.append({"sc": sc, "scfs": scfs})
     return chunks_info
 
-def decode_chunks(data):
+def to_chunks(data):
     sectors = to_sectors(data)
     index = decode_index(sector[0])
-    # Todo
+    chunks = []
+    for i in index:
+        chunks.append(b"".join(sectors[i["scfs"]:i["scfs"] + i["sc"]]))
+    
