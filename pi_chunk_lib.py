@@ -31,7 +31,7 @@
 
 import struct
 
-def to_sectors(data):
+def split_to_sectors(data):
     offset = 0
     sectors = []
     while not len(data) <= offset:
@@ -50,18 +50,16 @@ def decode_index(data):
     return chunks_info
 
 def to_chunks(data):
-    sectors = to_sectors(data)
+    sectors = split_to_sectors(data)
     index = decode_index(sector[0])
     chunks = []
     for i in index:
-        chunks.append(b"".join(sectors[i["scfs"]:i["scfs"] + i["sc"]]))
+        chunk_data = b"".join(sectors[i["scfs"]:i["scfs"] + i["sc"]])
+        if chunk_data[0:4] == b"\x04\x41\x01\x00": # Is a valid chunk?
+            chunks.append({
+                "blocks": data[:16384],
+                "data": data[16384:32768],
+                "skylight": data[32768:49152],
+                "blocklight": data[49152:65536]
+            })
     return chunks
-
-def split_chunk(data):
-    if data[0:4] == b"\x04\x41\x01\x00": # Is a valid chunk?
-        return {
-            "blocks": data[:16384],
-            "data": data[16384:32768],
-            "skylight": data[32768:49152],
-            "blocklight": data[49152:65536]
-        }
