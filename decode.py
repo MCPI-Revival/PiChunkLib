@@ -50,6 +50,7 @@ def decode_index(data):
     return chunks_info
 
 def decode_blocks(data):
+    block_map = [[[0] * 128] * 16] * 16
     return data # Todo
 
 def decode_data(data):
