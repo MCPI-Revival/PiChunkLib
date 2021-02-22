@@ -31,6 +31,8 @@
 
 import struct
 
+magic = b"\x04\x41\x01\x00"
+
 def to_sectors(data):
     offset = 0
     sectors = []
