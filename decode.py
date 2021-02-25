@@ -49,7 +49,7 @@ def decode_index(data):
         chunks_info.append({"sc": sc, "scfs": scfs})
     return chunks_info
 
-def decode_bpb(data):
+def decode_bpb(data): # Block per byte
     block_map = [[[0] * 128] * 16] * 16
     offset = 0
     x = 0
@@ -69,7 +69,7 @@ def decode_bpb(data):
         y += 1
     return block_map
 
-def decode_bphb(data):
+def decode_bphb(data): # Block per half byte
     block_map = [[[0] * 128] * 16] * 16
     offset = 0
     x = 0
@@ -92,7 +92,7 @@ def decode_bphb(data):
         y += 2
     return block_map
 
-def decode_biomes(data):
+def decode_cpb(data): # Chunk per byte
     return data # Todo
 
 def decode_chunks(data):
@@ -107,6 +107,6 @@ def decode_chunks(data):
                 "data": decode_bphb(chunk_data[32772:32772 + 16384]),
                 "skylight": decode_bphb(chunk_data[49156:49156 + 16384]),
                 "blocklight": decode_bphb(chunk_data[65540:65540 + 16384]),
-                "biomes": decode_biomes(chunk_data[81924:81924 + 256])
+                "biomes": decode_cpb(chunk_data[81924:81924 + 256])
             })
     return chunks
