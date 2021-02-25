@@ -70,13 +70,73 @@ def decode_blocks(data):
     return block_map
 
 def decode_data(data):
-    return data # Todo
+    block_map = [[[0] * 128] * 16] * 16
+    offset = 0
+    x = 0
+    z = 0
+    y = 0
+    while not len(data) <= offset:
+        y1 = data[offset] & 0x0f
+        y2 = data[offset] >> 4
+        block_map[x][z][y] = y1
+        block_map[x][z][y + 1] = y2
+        offset += 1
+        if y == 127:
+            z += 1
+            y = 0
+        if z == 15:
+            x += 1
+            z = 0
+        if x == 15:
+            break
+        y += 2
+    return block_map
 
 def decode_skylight(data):
-    return data # Todo
+    block_map = [[[0] * 128] * 16] * 16
+    offset = 0
+    x = 0
+    z = 0
+    y = 0
+    while not len(data) <= offset:
+        y1 = data[offset] & 0x0f
+        y2 = data[offset] >> 4
+        block_map[x][z][y] = y1
+        block_map[x][z][y + 1] = y2
+        offset += 1
+        if y == 127:
+            z += 1
+            y = 0
+        if z == 15:
+            x += 1
+            z = 0
+        if x == 15:
+            break
+        y += 2
+    return block_map
 
 def decode_blocklight(data):
-    return data # Todo
+    block_map = [[[0] * 128] * 16] * 16
+    offset = 0
+    x = 0
+    z = 0
+    y = 0
+    while not len(data) <= offset:
+        y1 = data[offset] & 0x0f
+        y2 = data[offset] >> 4
+        block_map[x][z][y] = y1
+        block_map[x][z][y + 1] = y2
+        offset += 1
+        if y == 127:
+            z += 1
+            y = 0
+        if z == 15:
+            x += 1
+            z = 0
+        if x == 15:
+            break
+        y += 2
+    return block_map
 
 def decode_biomes(data):
     return data # Todo
