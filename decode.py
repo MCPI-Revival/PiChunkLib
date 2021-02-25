@@ -93,7 +93,20 @@ def decode_bphb(data): # Block per half byte
     return block_map
 
 def decode_cpb(data): # Chunk per byte
-    return data # Todo
+    chunk_map = [[0] * 16] * 16
+    offset = 0
+    x = 0
+    z = 0
+    while not len(data) <= offset:
+        chunk_map[x][z] = data[offset]
+        offset += 1
+        if x == 15:
+            z += 1
+            x = 0
+        if z == 15:
+            break
+        x += 1
+    return block_map
 
 def decode_chunks(data):
     sectors = split_to_sectors(data)
