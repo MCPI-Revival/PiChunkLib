@@ -49,7 +49,7 @@ def decode_index(data):
         chunks_info.append({"sc": sc, "scfs": scfs})
     return chunks_info
 
-def decode_blocks(data):
+def decode_bpb(data):
     block_map = [[[0] * 128] * 16] * 16
     offset = 0
     x = 0
@@ -69,53 +69,7 @@ def decode_blocks(data):
         y += 1
     return block_map
 
-def decode_data(data):
-    block_map = [[[0] * 128] * 16] * 16
-    offset = 0
-    x = 0
-    z = 0
-    y = 0
-    while not len(data) <= offset:
-        y1 = data[offset] & 0x0f
-        y2 = data[offset] >> 4
-        block_map[x][z][y] = y1
-        block_map[x][z][y + 1] = y2
-        offset += 1
-        if y == 127:
-            z += 1
-            y = 0
-        if z == 15:
-            x += 1
-            z = 0
-        if x == 15:
-            break
-        y += 2
-    return block_map
-
-def decode_skylight(data):
-    block_map = [[[0] * 128] * 16] * 16
-    offset = 0
-    x = 0
-    z = 0
-    y = 0
-    while not len(data) <= offset:
-        y1 = data[offset] & 0x0f
-        y2 = data[offset] >> 4
-        block_map[x][z][y] = y1
-        block_map[x][z][y + 1] = y2
-        offset += 1
-        if y == 127:
-            z += 1
-            y = 0
-        if z == 15:
-            x += 1
-            z = 0
-        if x == 15:
-            break
-        y += 2
-    return block_map
-
-def decode_blocklight(data):
+def decode_bphb(data):
     block_map = [[[0] * 128] * 16] * 16
     offset = 0
     x = 0
@@ -149,10 +103,10 @@ def decode_chunks(data):
         chunk_data = b"".join(sectors[i["scfs"]:i["scfs"] + i["sc"]])
         if chunk_data[:4] == b"\x04\x41\x01\x00": # Is a valid chunk?
             chunks.append({
-                "blocks": decode_blocks(chunk_data[4:4 + 32768]),
-                "data": decode_data(chunk_data[32772:32772 + 16384]),
-                "skylight": decode_skylight(chunk_data[49156:49156 + 16384]),
-                "blocklight": decode_blocklight(chunk_data[65540:65540 + 16384]),
+                "blocks": decode_bpb(chunk_data[4:4 + 32768]),
+                "data": decode_bphb(chunk_data[32772:32772 + 16384]),
+                "skylight": decode_bphb(chunk_data[49156:49156 + 16384]),
+                "blocklight": decode_bphb(chunk_data[65540:65540 + 16384]),
                 "biomes": decode_biomes(chunk_data[81924:81924 + 256])
             })
     return chunks
