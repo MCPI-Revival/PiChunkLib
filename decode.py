@@ -78,18 +78,18 @@ def decode_bphb(data): # Block per half byte
     while not len(data) <= offset:
         y1 = data[offset] & 0x0f
         y2 = data[offset] >> 4
-        block_map[x][z][y] = y1
-        block_map[x][z][y + 1] = y2
         offset += 1
-        if y == 127:
-            z += 1
-            y = 0
-        if z == 15:
-            x += 1
-            z = 0
-        if x == 15:
-            break
-        y += 2
+        for cy in [y1, y2]:
+            block_map[x][z][y] = cy 
+            if y == 127:
+                z += 1
+                y = 0
+            if z == 15:
+                x += 1
+                z = 0
+            if x == 15:
+                break
+            y += 1
     return block_map
 
 def decode_cpb(data): # Chunk per byte
@@ -106,7 +106,7 @@ def decode_cpb(data): # Chunk per byte
         if z == 15:
             break
         x += 1
-    return block_map
+    return chunk_map
 
 def decode_chunks(data):
     sectors = split_to_sectors(data)
