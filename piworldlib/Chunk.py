@@ -179,4 +179,16 @@ class Chunk:
                 y += 1
                 
     def readBiomeData(self, buffer: bytes) -> None:
-        pass
+        self.resetBiomeData()
+        offset: int = 0
+        x: int = 0
+        z: int = 0
+        while not len(buffer) <= offset:
+            self.biomeData[x][z]: int = buffer[offset]
+            offset += 1
+            if x == 15:
+                z += 1
+                x: int = 0
+            if z == 15:
+                break
+            x += 1
