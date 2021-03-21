@@ -72,5 +72,5 @@ class World:
                 break
             x += 1
             chunk.read(buffer)
-            self.chunks.append(Chunk())
+            self.chunks.append(chunk)
         
