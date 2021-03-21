@@ -33,6 +33,44 @@ from piworldlib.Chunk import Chunk
 
 class World:
     def __init__(self, worldDir: str) -> None:
-        self.chunks = open(worldDir + "/chunks.dat", "rb").read()
-        self.level = open(worldDir + "/level.dat", "rb").read()
-        self.entities = open(worldDir + "/entities.dat", "rb").read()
+        self.chunksData = open(worldDir + "/chunks.dat", "rb").read()
+        self.levelData = open(worldDir + "/level.dat", "rb").read()
+        self.entitiesData = open(worldDir + "/entities.dat", "rb").read()
+        self.read_chunks()
+
+    def to_4KB_sectors(self, buffer: bytes) -> list:
+        offset = 0
+        sectors = []
+        while not len(buffer) <= offset:
+            sectors.append(buffer[offset:offset + 4096])
+            offset += 4096
+        return sectors
+    
+    def readChunksIndex(self, buffer: bytes) -> list:
+        if len(buffer) != 4096:
+            return
+        index: list = []
+        for offset in range(0, 4096, 4):
+            chunkSize: int = buffer[offset]
+            sectorIndex: int = int.from_bytes(buffer[offset + 1:offset + 4], "little")
+            index.append([chunkSize, sectorIndex])
+        return index
+    
+    def read_chunks(self) -> None:
+        sectors = to_4KB_sectors(self.chunksData)
+        index: list = self.readChunksIndex(sectors[0])
+        self.chunks: list = []
+        x: int = -127
+        z: int = -127
+        for i in index:
+            buffer: bytes = b"".join(sectors[i[1]:i[1] + i[0]])
+            chunk: object = Chunk(x, z)
+            if x == 127:
+                z += 1
+                x: int = -127
+            if z == 127:
+                break
+            x += 1
+            chunk.read()
+            self.chunks.append(Chunk())
+        
