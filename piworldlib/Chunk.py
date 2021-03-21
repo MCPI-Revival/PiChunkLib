@@ -36,25 +36,47 @@ class Chunk:
         self.x: int = x
         self.y: int = y
         if len(blockData) == 0:
-            self.blockData: list = ChunkUtils.new3DArray(16, 16, 128)
+            self.resetBlockData()
         else:
             self.blockData: list = blockData
         if len(data) == 0:
-            self.data: list = ChunkUtils.new3DArray(16, 16, 128)
+            self.resetData()
         else:
             self.data: list = data
         if len(skyLightData) == 0:
-            self.skyLightData: list = ChunkUtils.new3DArray(16, 16, 128)
+            self.resetSkyLightData()
         else:
             self.skyLightData: list = skyLightData
         if len(blockLightData) == 0:
-            self.blockLightData: list = ChunkUtils.new3DArray(16, 16, 128)
+            self.resetBlockLightData()
         else:
             self.blockLightData: list = blockLightData
         if len(biomeData) == 0:
-            self.biomeData: list = ChunkUtils.new2DArray(16, 16)
+            self.resetBiomeData()
         else:
             self.biomeData: list = biomeData
+                
+    def resetBlockData(self) -> None:
+        self.blockData: list = ChunkUtils.new3DArray(16, 16, 128)
+            
+    def resetData(self) -> None:
+        self.data: list = ChunkUtils.new3DArray(16, 16, 128)
+            
+    def resetSkyLightData(self) -> None:
+        self.skyLightData: list = ChunkUtils.new3DArray(16, 16, 128)
+            
+    def resetBlockLightData(self) -> None:
+        self.blockLightData: list = ChunkUtils.new3DArray(16, 16, 128)
+            
+    def resetBiomeData(self) -> None:
+        self.biomeData: list = ChunkUtils.new2DArray(16, 16)
+            
+    def resetAllData(self) -> None:
+        self.resetBlockData()
+        self.resetData()
+        self.resetSkyLightData()
+        self.resetBlockLightData()
+        self.resetBiomeData()
                 
     def setBlock(self, x: int, y: int, z: int, blockId: int) -> None:
         self.blockData[x + 127][z + 127][y + 64] = blockId
@@ -70,3 +92,6 @@ class Chunk:
 
     def setBiome(self, x: int, z: int, biome: int) -> None:
         self.biomeData[x + 127][z + 127] = biome
+        
+    def read(self, buffer):
+        resetAllData()
