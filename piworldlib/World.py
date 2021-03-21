@@ -71,6 +71,6 @@ class World:
             if z == 127:
                 break
             x += 1
-            chunk.read()
+            chunk.read(buffer)
             self.chunks.append(Chunk())
         
