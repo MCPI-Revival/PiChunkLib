@@ -29,7 +29,29 @@
 #                                                                              #
 ################################################################################
 
+from piworldlib.ChunkUtils import ChunkUtils
+
 class Chunk:
     def __init__(self, x: int, z: int, blockData: list = [], data: list = [], skyLightData: list = [], blockLightData: list = [], biomeData: list = []):
         self.x: int = x
         self.y: int = y
+        if len(blockData) == 0:
+            self.blockData: list = ChunkUtils.new3DArray()
+        else:
+            self.blockData: list = blockData
+        if len(data) == 0:
+            self.data: list = ChunkUtils.new3DArray()
+        else:
+            self.data: list = data
+        if len(skyLightData) == 0:
+            self.skyLightData: list = ChunkUtils.new3DArray()
+        else:
+            self.skyLightData: list = skyLightData
+        if len(blockLightData) == 0:
+            self.blockLightData: list = ChunkUtils.new3DArray()
+        else:
+            self.blockLightData: list = blockLightData
+        if len(biomeData) == 0:
+            self.biomeData: list = ChunkUtils.new2DArray()
+        else:
+            self.biomeData: list = biomeData
