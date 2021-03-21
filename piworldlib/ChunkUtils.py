@@ -32,8 +32,8 @@
 class ChunkUtils:
     @staticmethod
     def new3DArray(xSize: int, ySize: int, zSize: int) -> list:
-        return [[[0 for _ in range(xSize)] for _ in range(ySize)] for _ in range(zSize)]
+        return [[[0 for _ in range(zSize)] for _ in range(ySize)] for _ in range(xSize)]
         
     @staticmethod
     def new2DArray(xSize: int, zSize: int) -> list:
-        return [[0 for _ in range(xSize)] for _ in range(zSize)]
+        return [[0 for _ in range(zSize)] for _ in range(xSize)]
