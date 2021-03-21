@@ -57,7 +57,7 @@ class World:
         return index
     
     def read_chunks(self) -> None:
-        sectors = to_4KB_sectors(self.chunksData)
+        sectors: list = self.to_4KB_sectors(self.chunksData)
         index: list = self.readChunksIndex(sectors[0])
         self.chunks: list = []
         x: int = -127
