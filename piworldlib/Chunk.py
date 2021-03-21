@@ -192,3 +192,13 @@ class Chunk:
             if z == 15:
                 break
             x += 1
+            
+    def read(self, buffer: bytes) -> None:
+        if buffer[:4] == b"\x04\x41\x01\x00": # Is a valid chunk?
+            self.readBlockData(buffer[4:4 + 32768])
+            self.readData(buffer[32772:32772 + 16384])
+            self.readSkyLightData(buffer[49156:49156 + 16384])
+            self.readBlockLightData(buffer[65540:65540 + 16384])
+            self.readBiomeData(buffer[81924:81924 + 256])
+        else:
+            raise Exception("Invalid Chunk Data")
