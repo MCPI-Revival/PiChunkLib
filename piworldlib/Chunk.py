@@ -89,9 +89,26 @@ class Chunk:
         
     def setBlockLight(self, x: int, y: int, z: int, lightLevel: int) -> None:
         self.blockLightData[x + 127][z + 127][y + 64] = lightLevel
-
+        
     def setBiome(self, x: int, z: int, biome: int) -> None:
         self.biomeData[x + 127][z + 127] = biome
         
-    def read(self, buffer):
-        self.resetAllData()
+    def readBlockData(self, buffer: bytes):
+        self.resetBlockData()
+        offset = 0
+        x = 0
+        z = 0
+        y = 0
+        while not len(buffer) <= offset:
+            self.blockData[x][z][y] = buffer[offset]
+            offset += 1
+            if y == 127:
+                z += 1
+                y = 0
+            if z == 15:
+                x += 1
+                z = 0
+            if x == 15:
+                break
+            y += 1
+        
