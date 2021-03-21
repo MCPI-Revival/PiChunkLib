@@ -50,7 +50,7 @@ def decode_index(data):
     return chunks_info
 
 def decode_bpb(data): # Block per byte
-    block_map = [[[0] * 128] * 16] * 16
+    block_map = [[[0 for _ in range(128)] for _ in range(16)] for _ in range(16)]
     offset = 0
     x = 0
     z = 0
@@ -70,7 +70,7 @@ def decode_bpb(data): # Block per byte
     return block_map
 
 def decode_bphb(data): # Block per half byte
-    block_map = [[[0] * 128] * 16] * 16
+    block_map = [[[0 for _ in range(128)] for _ in range(16)] for _ in range(16)]
     offset = 0
     x = 0
     z = 0
@@ -93,7 +93,7 @@ def decode_bphb(data): # Block per half byte
     return block_map
 
 def decode_cpb(data): # Chunk per byte
-    chunk_map = [[0] * 16] * 16
+    chunk_map = [[0 for _ in range(16)] for _ in range(16)]
     offset = 0
     x = 0
     z = 0
