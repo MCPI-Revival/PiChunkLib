@@ -93,22 +93,90 @@ class Chunk:
     def setBiome(self, x: int, z: int, biome: int) -> None:
         self.biomeData[x + 127][z + 127] = biome
         
-    def readBlockData(self, buffer: bytes):
+    def readBlockData(self, buffer: bytes) -> None:
         self.resetBlockData()
-        offset = 0
-        x = 0
-        z = 0
-        y = 0
+        offset: int = 0
+        x: int = 0
+        z: int = 0
+        y: int = 0
         while not len(buffer) <= offset:
-            self.blockData[x][z][y] = buffer[offset]
+            self.blockData[x][z][y]: int = buffer[offset]
             offset += 1
             if y == 127:
                 z += 1
-                y = 0
+                y: int = 0
             if z == 15:
                 x += 1
-                z = 0
+                z: int = 0
             if x == 15:
                 break
             y += 1
-        
+            
+    def readData(self, buffer: bytes) -> None:
+        self.resetData()
+        offset: int = 0
+        x: int = 0
+        z: int = 0
+        y: int = 0
+        while not len(buffer) <= offset:
+            y1: int = buffer[offset] & 0x0f
+            y2: int = buffer[offset] >> 4
+            offset += 1
+            for currentY in [y1, y2]:
+                self.data[x][z][y]: int = currentY
+                if y == 127:
+                    z += 1
+                    y: int = 0
+                if z == 15:
+                    x += 1
+                    z: int = 0
+                if x == 15:
+                    break
+                y += 1
+                
+    def readSkyLightData(self, buffer: bytes) -> None:
+        self.resetSkyLightData()
+        offset: int = 0
+        x: int = 0
+        z: int = 0
+        y: int = 0
+        while not len(buffer) <= offset:
+            y1: int = buffer[offset] & 0x0f
+            y2: int = buffer[offset] >> 4
+            offset += 1
+            for currentY in [y1, y2]:
+                self.skyLightData[x][z][y]: int = currentY
+                if y == 127:
+                    z += 1
+                    y: int = 0
+                if z == 15:
+                    x += 1
+                    z: int = 0
+                if x == 15:
+                    break
+                y += 1
+                
+    def readBlockLightData(self, buffer: bytes) -> None:
+        self.resetBlockLightData()
+        offset: int = 0
+        x: int = 0
+        z: int = 0
+        y: int = 0
+        while not len(buffer) <= offset:
+            y1: int = buffer[offset] & 0x0f
+            y2: int = buffer[offset] >> 4
+            offset += 1
+            for currentY in [y1, y2]:
+                self.blockLightData[x][z][y]: int = currentY
+                if y == 127:
+                    z += 1
+                    y: int = 0
+                if z == 15:
+                    x += 1
+                    z: int = 0
+                if x == 15:
+                    break
+                y += 1
+                
+    def readBiomeData(self, buffer: bytes) -> None:
+        pass
