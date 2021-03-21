@@ -32,23 +32,23 @@
 from piworldlib.ChunkUtils import ChunkUtils
 
 class Chunk:
-    def __init__(self, x: int, z: int, blockData: list = [], data: list = [], skyLightData: list = [], blockLightData: list = [], biomeData: list = []):
+    def __init__(self, x: int, z: int, blockData: list = [], data: list = [], skyLightData: list = [], blockLightData: list = [], biomeData: list = []) -> None:
         self.x: int = x
         self.y: int = y
         if len(blockData) == 0:
-            self.blockData: list = ChunkUtils.new3DArray(16, 128, 16)
+            self.blockData: list = ChunkUtils.new3DArray(16, 16, 128)
         else:
             self.blockData: list = blockData
         if len(data) == 0:
-            self.data: list = ChunkUtils.new3DArray(16, 128, 26)
+            self.data: list = ChunkUtils.new3DArray(16, 16, 128)
         else:
             self.data: list = data
         if len(skyLightData) == 0:
-            self.skyLightData: list = ChunkUtils.new3DArray(16, 128, 16)
+            self.skyLightData: list = ChunkUtils.new3DArray(16, 16, 128)
         else:
             self.skyLightData: list = skyLightData
         if len(blockLightData) == 0:
-            self.blockLightData: list = ChunkUtils.new3DArray(16, 128, 16)
+            self.blockLightData: list = ChunkUtils.new3DArray(16, 16, 128)
         else:
             self.blockLightData: list = blockLightData
         if len(biomeData) == 0:
@@ -56,5 +56,14 @@ class Chunk:
         else:
             self.biomeData: list = biomeData
                 
-    def setBlock(self, x: int, y: int, z: int, blockId: int):
-        pass
+    def setBlock(self, x: int, y: int, z: int, blockId: int) -> None:
+        self.blockData[x + 127][z + 127][y + 64] = blockId
+        
+    def setData(self, x: int, y: int, z: int, data: int) -> None:
+        self.data[x + 127][z + 127][y + 64] = data
+        
+    def setSkyLight(self, x: int, y: int, z: int, lightLevel: int) -> None:
+        self.skyLightData[x + 127][z + 127][y + 64] = lightLevel
+        
+    def setBlockLight(self, x: int, y: int, z: int, lightLevel: int) -> None:
+        self.blockLightData[x + 127][z + 127][y + 64] = lightLevel
