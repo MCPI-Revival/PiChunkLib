@@ -94,4 +94,4 @@ class Chunk:
         self.biomeData[x + 127][z + 127] = biome
         
     def read(self, buffer):
-        resetAllData()
+        self.resetAllData()
