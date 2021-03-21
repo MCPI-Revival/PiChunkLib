@@ -36,22 +36,25 @@ class Chunk:
         self.x: int = x
         self.y: int = y
         if len(blockData) == 0:
-            self.blockData: list = ChunkUtils.new3DArray()
+            self.blockData: list = ChunkUtils.new3DArray(16, 128, 16)
         else:
             self.blockData: list = blockData
         if len(data) == 0:
-            self.data: list = ChunkUtils.new3DArray()
+            self.data: list = ChunkUtils.new3DArray(16, 128, 26)
         else:
             self.data: list = data
         if len(skyLightData) == 0:
-            self.skyLightData: list = ChunkUtils.new3DArray()
+            self.skyLightData: list = ChunkUtils.new3DArray(16, 128, 16)
         else:
             self.skyLightData: list = skyLightData
         if len(blockLightData) == 0:
-            self.blockLightData: list = ChunkUtils.new3DArray()
+            self.blockLightData: list = ChunkUtils.new3DArray(16, 128, 16)
         else:
             self.blockLightData: list = blockLightData
         if len(biomeData) == 0:
-            self.biomeData: list = ChunkUtils.new2DArray()
+            self.biomeData: list = ChunkUtils.new2DArray(16, 16)
         else:
             self.biomeData: list = biomeData
+                
+    def setBlock(self, x: int, y: int, z: int, blockId: int):
+        pass
