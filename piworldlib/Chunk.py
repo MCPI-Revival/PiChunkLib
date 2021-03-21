@@ -67,3 +67,6 @@ class Chunk:
         
     def setBlockLight(self, x: int, y: int, z: int, lightLevel: int) -> None:
         self.blockLightData[x + 127][z + 127][y + 64] = lightLevel
+
+    def setBiome(self, x: int, z: int, biome: int) -> None:
+        self.biomeData[x + 127][z + 127] = biome
