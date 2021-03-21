@@ -34,7 +34,7 @@ from piworldlib.ChunkUtils import ChunkUtils
 class Chunk:
     def __init__(self, x: int, z: int, blockData: list = [], data: list = [], skyLightData: list = [], blockLightData: list = [], biomeData: list = []) -> None:
         self.x: int = x
-        self.y: int = y
+        self.z: int = z
         if len(blockData) == 0:
             self.resetBlockData()
         else:
