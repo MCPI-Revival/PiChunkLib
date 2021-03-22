@@ -69,7 +69,7 @@ class World:
             buffer: bytes = b"".join(sectors[i[1]:i[1] + i[0]])
             chunk: object = Chunk(chunkX, chunkZ)
             chunk.read(buffer)
-            self.chunks[chunkX][chunkZ]: object = chunk
+            self.chunks[chunkZ][chunkX]: object = chunk
             if chunkZ == (sqrtChunksCount - 1):
                 chunkX += 1
                 chunkZ: int = 0
