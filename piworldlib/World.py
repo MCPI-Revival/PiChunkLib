@@ -49,11 +49,19 @@ class World:
     def readChunksIndex(self, buffer: bytes) -> list:
         if len(buffer) != 4096:
             return
-        index: list = []
+        temp_index: list = []
         for offset in range(0, 4096, 4):
             chunkSize: int = buffer[offset]
             sectorIndex: int = int.from_bytes(buffer[offset + 1:offset + 4], "little")
-            index.append([chunkSize, sectorIndex])
+            temp_index.append([chunkSize, sectorIndex])
+        index: list = []
+        i: int = 0
+        for a in temp_index: # Some Garbage Collection
+            if i > -1:
+                index.append(a)
+            i += 1
+            if i == 16:
+                i: int = -16
         return index
     
     def read_chunks(self) -> None:
@@ -73,4 +81,3 @@ class World:
             x += 1
             chunk.read(buffer)
             self.chunks.append(chunk)
-        
