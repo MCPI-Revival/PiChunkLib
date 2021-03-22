@@ -30,6 +30,7 @@
 ################################################################################
 
 from piworldlib.Chunk import Chunk
+from piworldlib.ChunkUtils import ChunkUtils
 
 class World:
     def __init__(self, worldDir: str) -> None:
@@ -60,17 +61,17 @@ class World:
     def read_chunks(self) -> None:
         sectors: list = self.to_4KB_sectors(self.chunksData)
         index: list = self.readChunksIndex(sectors[0])
-        self.chunks: list = []
+        self.chunks: list = ChunkUtils.new2DArray(32, 32)
         chunkX: int = 0
         chunkZ: int = 0
         for i in index:
             buffer: bytes = b"".join(sectors[i[1]:i[1] + i[0]])
-            chunk: object = Chunk(x, z)
-            if z == 32:
+            chunk: object = Chunk(chunkX, chunkZ)
+            chunk.read(buffer)
+            self.chunks[chunkX][chunkZ]: object = chunk
+            if z == 31:
                 chunkX += 1
                 chunkZ: int = 0
-            if chunkX == 32:
+            if chunkX == 31:
                 break
             chunkZ += 1
-            chunk.read(buffer)
-            self.chunks.append(chunk)
