@@ -61,6 +61,7 @@ class World:
     def read_chunks(self) -> None:
         sectors: list = self.to_4KB_sectors(self.chunksData)
         index: list = self.readChunksIndex(sectors[0])
+        sqrtChunksCount: int = int(len(index) ** .5)
         self.chunks: list = ChunkUtils.new2DArray(32, 32)
         chunkX: int = 0
         chunkZ: int = 0
@@ -69,9 +70,9 @@ class World:
             chunk: object = Chunk(chunkX, chunkZ)
             chunk.read(buffer)
             self.chunks[chunkX][chunkZ]: object = chunk
-            if z == 31:
+            if z == (sqrtChunksCount - 1):
                 chunkX += 1
                 chunkZ: int = 0
-            if chunkX == 31:
+            if chunkX == (sqrtChunksCount - 1):
                 break
             chunkZ += 1
