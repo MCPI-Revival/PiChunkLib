@@ -79,19 +79,24 @@ class Chunk:
         self.resetBiomeData()
                 
     def setBlock(self, x: int, y: int, z: int, blockId: int) -> None:
-        self.blockData[x + 127][z + 127][y + 64] = blockId
+        if self.x <= x <= self.z and self.x <= z <= self.z:
+            self.blockData[x + 127][z + 127][y + 64] = blockId
         
     def setData(self, x: int, y: int, z: int, data: int) -> None:
-        self.data[x + 127][z + 127][y + 64] = data
+        if self.x <= x <= self.z and self.x <= z <= self.z:
+            self.data[x + 127][z + 127][y + 64] = data
         
     def setSkyLight(self, x: int, y: int, z: int, lightLevel: int) -> None:
-        self.skyLightData[x + 127][z + 127][y + 64] = lightLevel
+        if self.x <= x <= self.z and self.x <= z <= self.z:
+            self.skyLightData[x + 127][z + 127][y + 64] = lightLevel
         
     def setBlockLight(self, x: int, y: int, z: int, lightLevel: int) -> None:
-        self.blockLightData[x + 127][z + 127][y + 64] = lightLevel
+        if self.x <= x <= self.z and self.x <= z <= self.z:
+            self.blockLightData[x + 127][z + 127][y + 64] = lightLevel
         
     def setBiome(self, x: int, z: int, biome: int) -> None:
-        self.biomeData[x + 127][z + 127] = biome
+        if self.x <= x <= self.z and self.x <= z <= self.z:
+            self.biomeData[x + 127][z + 127] = biome
         
     def readBlockData(self, buffer: bytes) -> None:
         self.resetBlockData()
