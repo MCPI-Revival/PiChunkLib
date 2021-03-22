@@ -77,6 +77,26 @@ class Chunk:
         self.resetSkyLightData()
         self.resetBlockLightData()
         self.resetBiomeData()
+        
+    def getBlock(self, x: int, y: int, z: int) -> int:
+        if self.x <= x <= self.z and self.x <= z <= self.z:
+            return self.blockData[x - self.x][z - self.z][y + 64]
+        
+    def getData(self, x: int, y: int, z: int) -> int:
+        if self.x <= x <= self.z and self.x <= z <= self.z:
+            return self.data[x - self.x][z - self.z][y + 64]
+        
+    def getSkyLight(self, x: int, y: int, z: int) -> int:
+        if self.x <= x <= self.z and self.x <= z <= self.z:
+            return self.skyLightData[x - self.x][z - self.z][y + 64]
+        
+    def getBlockLight(self, x: int, y: int, z: int) -> int:
+        if self.x <= x <= self.z and self.x <= z <= self.z:
+            return self.blockLightData[x - self.x][z - self.z][y + 64]
+        
+    def getBiome(self, x: int, z: int) -> int:
+        if self.x <= x <= self.z and self.x <= z <= self.z:
+            return self.biomeData[x - self.x][z - self.z]
                 
     def setBlock(self, x: int, y: int, z: int, blockId: int) -> None:
         if self.x <= x <= self.z and self.x <= z <= self.z:
