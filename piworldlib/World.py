@@ -39,8 +39,8 @@ class World:
         self.read_chunks()
 
     def to_4KB_sectors(self, buffer: bytes) -> list:
-        offset = 0
-        sectors = []
+        offset: int = 0
+        sectors: list = []
         while not len(buffer) <= offset:
             sectors.append(buffer[offset:offset + 4096])
             offset += 4096
