@@ -70,7 +70,7 @@ class World:
             chunk: object = Chunk(chunkX, chunkZ)
             chunk.read(buffer)
             self.chunks[chunkX][chunkZ]: object = chunk
-            if z == (sqrtChunksCount - 1):
+            if chunkZ == (sqrtChunksCount - 1):
                 chunkX += 1
                 chunkZ: int = 0
             if chunkX == (sqrtChunksCount - 1):
