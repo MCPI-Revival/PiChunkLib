@@ -67,11 +67,11 @@ class World:
             buffer: bytes = b"".join(sectors[i[1]:i[1] + i[0]])
             chunk: object = Chunk(x, z)
             if z == 127:
-                x += 1
+                x += 16
                 z: int = -127
             if x == 127:
                 break
-            z += 1
+            z += 16
             chunk.read(buffer)
             self.chunks.append(chunk)
             
