@@ -32,9 +32,9 @@
 from piworldlib.ChunkUtils import ChunkUtils
 
 class Chunk:
-    def __init__(self, x: int, z: int, blockData: list = [], data: list = [], skyLightData: list = [], blockLightData: list = [], biomeData: list = []) -> None:
-        self.x: int = x
-        self.z: int = z
+    def __init__(self, chunkX: int, chunkZ: int, blockData: list = [], data: list = [], skyLightData: list = [], blockLightData: list = [], biomeData: list = []) -> None:
+        self.chunkX: int = chunkX
+        self.chunkZ: int = chunkZ
         if len(blockData) == 0:
             self.resetBlockData()
         else:
@@ -70,53 +70,6 @@ class Chunk:
             
     def resetBiomeData(self) -> None:
         self.biomeData: list = ChunkUtils.new2DArray(16, 16)
-            
-    def resetAllData(self) -> None:
-        self.resetBlockData()
-        self.resetData()
-        self.resetSkyLightData()
-        self.resetBlockLightData()
-        self.resetBiomeData()
-        
-    def getBlock(self, x: int, y: int, z: int) -> int:
-        if self.x <= x <= self.z and self.x <= z <= self.z:
-            return self.blockData[abs(x - self.x)][abs(z - self.z)][y + 64]
-        
-    def getData(self, x: int, y: int, z: int) -> int:
-        if self.x <= x <= self.z and self.x <= z <= self.z:
-            return self.data[abs(x - self.x)][abs(z - self.z)][y + 64]
-        
-    def getSkyLight(self, x: int, y: int, z: int) -> int:
-        if self.x <= x <= self.z and self.x <= z <= self.z:
-            return self.skyLightData[abs(x - self.x)][abs(z - self.z)][y + 64]
-        
-    def getBlockLight(self, x: int, y: int, z: int) -> int:
-        if self.x <= x <= self.z and self.x <= z <= self.z:
-            return self.blockLightData[abs(x - self.x)][abs(z - self.z)][y + 64]
-        
-    def getBiome(self, x: int, z: int) -> int:
-        if self.x <= x <= self.z and self.x <= z <= self.z:
-            return self.biomeData[abs(x - self.x)][abs(z - self.z)]
-                
-    def setBlock(self, x: int, y: int, z: int, blockId: int) -> None:
-        if self.x <= x <= self.z and self.x <= z <= self.z:
-            self.blockData[abs(x - self.x)][abs(z - self.z)][y + 64] = blockId
-        
-    def setData(self, x: int, y: int, z: int, data: int) -> None:
-        if self.x <= x <= self.z and self.x <= z <= self.z:
-            self.data[abs(x - self.x)][abs(z - self.z)][y + 64] = data
-        
-    def setSkyLight(self, x: int, y: int, z: int, lightLevel: int) -> None:
-        if self.x <= x <= self.z and self.x <= z <= self.z:
-            self.skyLightData[abs(x - self.x)][abs(z - self.z)][y + 64] = lightLevel
-        
-    def setBlockLight(self, x: int, y: int, z: int, lightLevel: int) -> None:
-        if self.x <= x <= self.z and self.x <= z <= self.z:
-            self.blockLightData[abs(x - self.x)][abs(z - self.z)][y + 64] = lightLevel
-        
-    def setBiome(self, x: int, z: int, biome: int) -> None:
-        if self.x <= x <= self.z and self.x <= z <= self.z:
-            self.biomeData[abs(x - self.x)][abs(z - self.z)] = biome
         
     def readBlockData(self, buffer: bytes) -> None:
         self.resetBlockData()
