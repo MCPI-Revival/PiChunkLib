@@ -61,66 +61,16 @@ class World:
         sectors: list = self.to_4KB_sectors(self.chunksData)
         index: list = self.readChunksIndex(sectors[0])
         self.chunks: list = []
-        x: int = -127
-        z: int = -127
+        chunkX: int = 0
+        chunkZ: int = 0
         for i in index:
             buffer: bytes = b"".join(sectors[i[1]:i[1] + i[0]])
             chunk: object = Chunk(x, z)
-            if z == 127:
-                x += 16
-                z: int = -127
-            if x == 127:
+            if z == 32:
+                chunkX += 1
+                chunkZ: int = 0
+            if chunkX == 32:
                 break
-            z += 16
+            chunkZ += 1
             chunk.read(buffer)
             self.chunks.append(chunk)
-            
-    def getBlock(self, x: int, y: int, z: int) -> int:
-        for chunk in self.chunks:
-            if chunk.x <= x <= chunk.z and chunk.x <= z <= chunk.z:
-                return chunk.getBlock(x, y, z)
-        
-    def getData(self, x: int, y: int, z: int) -> int:
-        for chunk in self.chunks:
-            if chunk.x <= x <= chunk.z and chunk.x <= z <= chunk.z:
-                return chunk.getData(x, y, z)
-        
-    def getSkyLight(self, x: int, y: int, z: int) -> int:
-        for chunk in self.chunks:
-            if chunk.x <= x <= chunk.z and chunk.x <= z <= chunk.z:
-                return chunk.getSkyLight(x, y, z)
-        
-    def getBlockLight(self, x: int, y: int, z: int) -> int:
-        for chunk in self.chunks:
-            if chunk.x <= x <= chunk.z and chunk.x <= z <= chunk.z:
-                return chunk.getBlockLight(x, y, z)
-        
-    def getBiome(self, x: int, z: int) -> int:
-        for chunk in self.chunks:
-            if chunk.x <= x <= chunk.z and chunk.x <= z <= chunk.z:
-                return chunk.getBiome(x, y, z)
-                
-    def setBlock(self, x: int, y: int, z: int, blockId: int) -> None:
-        for chunk in self.chunks:
-            if chunk.x <= x <= chunk.z and chunk.x <= z <= chunk.z:
-                chunk.setBlock(x, y, z, blockId)
-        
-    def setData(self, x: int, y: int, z: int, data: int) -> None:
-        for chunk in self.chunks:
-            if chunk.x <= x <= chunk.z and chunk.x <= z <= chunk.z:
-                chunk.setData(x, y, z, data)
-        
-    def setSkyLight(self, x: int, y: int, z: int, lightLevel: int) -> None:
-        for chunk in self.chunks:
-            if chunk.x <= x <= chunk.z and chunk.x <= z <= chunk.z:
-                chunk.setSkyLight(x, y, z, lightLevel)
-        
-    def setBlockLight(self, x: int, y: int, z: int, lightLevel: int) -> None:
-        for chunk in self.chunks:
-            if chunk.x <= x <= chunk.z and chunk.x <= z <= chunk.z:
-                chunk.setBlockLight(x, y, z, lightLevel)
-        
-    def setBiome(self, x: int, z: int, biome: int) -> None:
-        for chunk in self.chunks:
-            if chunk.x <= x <= chunk.z and chunk.x <= z <= chunk.z:
-               chunk.setBiome(x, z, biome)
